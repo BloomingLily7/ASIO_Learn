@@ -130,5 +130,24 @@ int accept_new_connect() {
 		std::cout << "Error occured! Error code =" << e.code() << ". Message: " << e.what();
 		return e.code().value();
 	}
-	return 0
+	return 0;
+}
+
+
+//buffer就是接收和发送数据时缓存数据的结构
+//asio提出了buffer()函数，该函数接收多种形式的字节流
+
+//将string类型的数据转为buffer能够接受的类型
+void use_buffer_str() {
+	std::string buf = "hello world";
+	asio::const_buffer output = asio::buffer(buf);
+}
+
+//将数组转为buffer能够接受的类型
+void use_buffer_array() {
+	const size_t BUF_SIZE_BYTES = 20;//缓冲区的大小为 20 字节
+	std::unique_ptr<char[]> buf(new char[BUF_SIZE_BYTES]); //智能指针管理一个动态分配的字符数组
+	auto input_buf = asio::buffer(static_cast<void*>(buf.get()), BUF_SIZE_BYTES); //buf.get() 获取智能指针管理的原始指针
+																																//tatic_cast<void*> 将字符指针转换为 void 指针
+																																//asio::buffer() 创建一个 ASIO 缓冲区对象，第一个参数是指向内存块的指针，第二个参数是内存块的大小
 }
