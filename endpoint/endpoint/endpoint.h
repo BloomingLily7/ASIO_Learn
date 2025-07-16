@@ -11,3 +11,7 @@ extern int accept_new_connect();
 
 extern void use_buffer_str();
 extern void use_buffer_array();
+extern void write_to_socket(asio::ip::tcp::socket& skt);
+extern int send_data_by_write_some();
+
+ 
